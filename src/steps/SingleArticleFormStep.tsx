@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -17,7 +17,20 @@ const MIN_HEADINGS = 3;
 const MIN_FAQS = 3;
 const MIN_CONTENT_SIZE = 100;
 
-const SingleArticleFormStep = ({ initialConfig }: { initialConfig: { contentLLMVersion: string } }) => {
+type InitialConfig = {
+  contentLLMVersion: string;
+  language?: string;
+};
+
+const SingleArticleFormStep = ({ initialConfig }: { initialConfig: InitialConfig }) => {
+  const [language, setLanguage] = useState(initialConfig.language || 'it');
+  const schema = yup.object().shape({
+    // Use lazy to switch schema based on language
+    ...(language === SupportedLanguageValues.DE
+      ? inputDataDESingleArticleSchema.fields
+      : inputDataITSingleArticleSchema.fields),
+  });
+
   const {
     register,
     handleSubmit,
@@ -31,18 +44,15 @@ const SingleArticleFormStep = ({ initialConfig }: { initialConfig: { contentLLMV
       numberOfFaq: MIN_FAQS,
       numberOfHeadings: MIN_HEADINGS,
       minimumNumberOfWords: MIN_CONTENT_SIZE,
-      language: 'it',
+      language: language,
     },
     mode: 'onChange',
-    resolver: yupResolver(
-      yup.object().shape({}).oneOf([
-        inputDataITSingleArticleSchema.required(),
-        inputDataDESingleArticleSchema.required(),
-      ])
-    ),
+    resolver: yupResolver(schema),
   });
-
   const watchedLanguage = watch('language');
+  useEffect(() => {
+    setLanguage(watchedLanguage);
+  }, [watchedLanguage])
 
   const { moveToStep } = useContext(StepsContext);
 
