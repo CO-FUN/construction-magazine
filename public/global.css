@@ -1,0 +1,6 @@
+body,
+html,
+#__next,
+.app {
+  height: 100%;
+}
