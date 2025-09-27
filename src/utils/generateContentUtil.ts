@@ -142,7 +142,6 @@ export const generateContent = async (
               contentLLMVersion
             );
             
-            debugger
             return callOpenAI(
               enricherITArticleContent(title, JSON.stringify(contentIT.result)),
               contentLLMVersion
