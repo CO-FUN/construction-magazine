@@ -1,4 +1,3 @@
-import NextImage from 'next/image';
 import { useContext } from 'react';
 
 // Tailwind CSS used for layout and typography

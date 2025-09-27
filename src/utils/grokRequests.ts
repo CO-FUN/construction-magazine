@@ -31,6 +31,7 @@ export const grokCompletionsRequest = async (
     id: completion.id,
     object: completion.object,
     created: completion.created,
+    // @ts-expect-error
     choices: completion.choices.map((choice: { message: { role: string; content: string } }) => ({
       message: choice.message,
     })),

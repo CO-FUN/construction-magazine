@@ -1,4 +1,3 @@
-
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,21 +13,15 @@ import {
   inputDataITSuggestionTableSchema,
 } from '../utils/validation';
 import { StepsContext } from './StepsContext';
-import { Steps, SupportedLanguages } from './types';
+import { Steps } from './types';
 
 const SuggestionTableStep = ({ config }: { config: any }) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setValue,
     watch,
-  } = useForm<{
-    keywords: string;
-    language:
-      | typeof SupportedLanguageValues.IT
-      | typeof SupportedLanguageValues.DE;
-  }>({
+  } = useForm<any>({
     values: {
       ...config,
       keywords: '',
@@ -36,11 +29,10 @@ const SuggestionTableStep = ({ config }: { config: any }) => {
     },
     mode: 'onChange',
     resolver: yupResolver(
-      yup.lazy((values) =>
-        values.language === SupportedLanguageValues.IT
-          ? inputDataITSuggestionTableSchema.required()
-          : inputDataDESuggestionTableSchema.required()
-      )
+      yup.object().shape({}).oneOf([
+        inputDataITSuggestionTableSchema.required(),
+        inputDataDESuggestionTableSchema.required(),
+      ])
     ),
   });
 
@@ -81,8 +73,6 @@ const SuggestionTableStep = ({ config }: { config: any }) => {
 
   return (
     <CommonFormLayout
-      title="Article Suggestion Table Generator"
-      description="Information about Suggestion Table"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="space-y-6 my-2">

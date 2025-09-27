@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { CommonFormLayout } from '../components/CommonFormLayout';
 import { GenerationOptionValues } from '../utils/constants';
 import { StepsContext } from './StepsContext';
 import { GenerationOptions, Steps } from './types';
@@ -37,7 +36,6 @@ const FormStep = ({
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setValue,
   } = useForm<
     any & {
       generationOptions: GenerationOptions;
@@ -81,14 +79,6 @@ const FormStep = ({
       generationOptions: generationOptions,
     });
   };
-
-  // Step indicator for wizard
-  const steps = [
-    'Select Mode',
-    'Configure',
-    'Generate',
-  ];
-  const currentStep = 0;
 
   return (
     <>

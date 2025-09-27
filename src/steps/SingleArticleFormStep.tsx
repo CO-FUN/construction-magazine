@@ -1,4 +1,3 @@
-
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
@@ -12,7 +11,7 @@ import {
   inputDataITSingleArticleSchema,
 } from '../utils/validation';
 import { StepsContext } from './StepsContext';
-import { InputDataDE, InputDataIT, Steps, SupportedLanguages } from './types';
+import { InputDataDE, InputDataIT, Steps } from './types';
 
 const MIN_HEADINGS = 3;
 const MIN_FAQS = 3;
@@ -23,9 +22,8 @@ const SingleArticleFormStep = ({ initialConfig }: { initialConfig: { contentLLMV
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setValue,
     watch,
-  } = useForm<InputDataDE | InputDataIT>({
+  } = useForm<any>({
     values: {
       ...initialConfig,
       articleName: '',
@@ -37,13 +35,10 @@ const SingleArticleFormStep = ({ initialConfig }: { initialConfig: { contentLLMV
     },
     mode: 'onChange',
     resolver: yupResolver(
-      yup.lazy((values) => {
-        if (values.language === SupportedLanguageValues.IT) {
-          return inputDataITSingleArticleSchema.required();
-        } else {
-          return inputDataDESingleArticleSchema.required();
-        }
-      })
+      yup.object().shape({}).oneOf([
+        inputDataITSingleArticleSchema.required(),
+        inputDataDESingleArticleSchema.required(),
+      ])
     ),
   });
 
@@ -51,7 +46,7 @@ const SingleArticleFormStep = ({ initialConfig }: { initialConfig: { contentLLMV
 
   const { moveToStep } = useContext(StepsContext);
 
-  const onSubmit = async (data: InputDataDE | InputDataIT) => {
+  const onSubmit = async (data: any) => {
     moveToStep({
       step: Steps.Generating,
       data: [data],

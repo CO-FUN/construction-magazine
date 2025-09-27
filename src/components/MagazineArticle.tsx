@@ -96,8 +96,8 @@ export default function YourPage() {
       setCopied(true);
       toast.success("Code copied to clipboard!");
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      toast.error("Failed to copy code");
+    } catch (err: any) {
+      toast.error(err.message);
     }
   };
 

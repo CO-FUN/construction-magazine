@@ -9,7 +9,6 @@ import { StepsContext } from '../src/steps/StepsContext';
 import SuccessStep from '../src/steps/SuccessStep';
 import SuggestionTableStep from '../src/steps/SuggestionTableStep';
 import { GenerationStepState, Steps } from '../src/steps/types';
-import { WizardStepper } from '../src/components/WizardStepper';
 
 export default function Page() {
   const [commonConfig, setCommonConfig] = useState<any>({
@@ -31,7 +30,7 @@ export default function Page() {
       style={{ backgroundImage: "url('/bg.jpg')" }}
     >
       <header className="w-full py-3 px-6 bg-white/70 backdrop-blur-md shadow-md flex items-center justify-center sticky top-0 z-10">
-        <h1 className="text-2xl text-gray-800 bodoni-moda-regular">Syntia's Construction Writer</h1>
+        <h1 className="text-2xl text-gray-800 bodoni-moda-regular">Syntia&apos;s Construction Writer</h1>
       </header>
       <main className="flex-1 flex items-center justify-center py-8 px-2">
         <div className={`w-full mx-auto ${currentStep.step === Steps.Form ? "bg-white/50 backdrop-blur-md" : "bg-white"} ${currentStep.step === Steps.Success ? "max-w-7xl" : "max-w-4xl"} shadow-lg rounded-2xl p-4 md:p-8`}>

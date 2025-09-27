@@ -5,7 +5,6 @@ import { generateContent } from '../utils/generateContentUtil';
 import { useProgressMessages } from '../utils/useProgressUpdate';
 import { StepsContext } from './StepsContext';
 import {
-  ErrorFormState,
   InputDataDE,
   InputDataIT,
   Steps,
